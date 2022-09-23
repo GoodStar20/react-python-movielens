@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  db:
+    image: mariadb:10.5.8
+    environment:
+      - MYSQL_ROOT_PASSWORD=testpass
+      - MYSQL_DATABASE=challenge
+    volumes:
+      - devmysqldb:/var/lib/mysql
+      - ./db/sql:/docker-entrypoint-initdb.d
+    
+  backend:
+    build: backend-python
+    depends_on:
+      - db
+    restart: always
+    volumes:
+      - ./backend-python:/app
+    stdin_open: true  # enable attach for pdb
+    tty: true
+    ports:
+      - "8080:80"
+    
+  site:
+    build: frontend-react
+    restart: always
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend-react:/site
+    ports:
+      - "8090:80"
+
+volumes:  
+  devmysqldb:
