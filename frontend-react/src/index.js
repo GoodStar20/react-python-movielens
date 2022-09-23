@@ -1,6 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from "./App";
+import "./index.scss";
+
+const history = createBrowserHistory();
+
+ReactDOM.render(
+  <Router history={history}>
+    <App />
+  </Router>,
+  document.getElementById("root")
+);
