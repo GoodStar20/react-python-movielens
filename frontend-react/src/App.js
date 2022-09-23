@@ -1,23 +1,20 @@
-import React, { Component } from 'react';
+import React from "react";
+import { Route, withRouter, Switch } from "react-router-dom";
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <h1>Hello</h1>
-        <pre>state = {JSON.stringify(this.state, undefined, '  ')}</pre>
-      </div>
-    );
-  }
-  componentDidMount() {
-    fetch('/test').then((res) => {
-      return res.json();
-    }).then((res) => {
-      this.setState({res});
-    }).catch((err) => {
-      this.setState({err});
-    });
-  }
-}
+import Movies from "./pages/Movies";
+import MovieInfo from "./pages/MovieInfo";
 
-export default App;
+import "./index.scss";
+
+const App = () => {
+  return (
+    <div className="app">
+      <Switch>
+        <Route exact path="/" component={Movies} />
+        <Route exact path="/info/:id" component={MovieInfo} />
+      </Switch>
+    </div>
+  );
+};
+
+export default withRouter(App);
