@@ -1,43 +1,59 @@
-import { Link } from "react-router-dom";
-
 import "./styles.scss";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, rowId }) => {
   return (
-    <div className="col-md-3 mt-3">
-      <div className="movie-list">
-        {/* <Link to={"/movie/info/" + movie?.id}>
-          <img src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`} />
-        </Link>
-        <div className="title">{movie.title}</div> */}
-
-        <a href={`https://movielens.org/movies/${movie?.movie_id}`}>
-          {movie?.title}
-        </a>
-        <a
-          href={`http://www.imdb.com/title/${movie?.imdb_id}`}
-          style={{ paddingLeft: "4px" }}
-        >
-          imdb
-        </a>
-        <a
-          href={`https://www.themoviedb.org/movie/${movie?.tmdb_id}`}
-          style={{ paddingLeft: "4px" }}
-        >
-          tmdb
-        </a>
-        <li>
-          Id: {movie?.movie_id} Genres: {movie?.genres}
-        </li>
-        {/* <li>
-            Num_of_Tags: {movie.tag_count} Tags: {movie.all_tags.join(" | ")}
-          </li>
-          <li>
-            Num_of_Ratings: {movie.rating_count} Average Rating:{" "}
-            {movie.avg_rating}
-          </li> */}
-      </div>
-    </div>
+    <tr>
+      <td className="align-middle" data-testid="id">
+        {rowId}
+      </td>
+      <td className="align-middle" data-testid="movie-id">
+        {movie.movie_id}
+      </td>
+      <td className="align-middle" data-testid="movie-title">
+        {movie.title}
+      </td>
+      <td className="align-middle" data-testid="movie-genres">
+        {movie.genres.join(" | ")}
+      </td>
+      <td className="align-middle" data-testid="movie-tagcount">
+        {movie.tag_count}
+      </td>
+      <td className="align-middle" data-testid="movie-alltags">
+        {movie.all_tags.join(" | ")}
+      </td>
+      <td className="align-middle" data-testid="movie-ratingcount">
+        {movie.rating_count}
+      </td>
+      <td className="align-middle" data-testid="movie-avgrating">
+        {movie.avg_rating}
+      </td>
+      <td className="align-middle">
+        <div>
+          <a
+            href={`https://movielens.org/movies/${movie.movie_id}`}
+            target="_blank"
+          >
+            Movielens
+          </a>
+        </div>
+        <div>
+          <a
+            href={`http://www.imdb.com/title/${movie.imdb_tmdb[0]}`}
+            target="_blank"
+          >
+            IMDB
+          </a>
+        </div>
+        <div>
+          <a
+            href={`https://www.themoviedb.org/movie/${movie.imdb_tmdb[1]}`}
+            target="_blank"
+          >
+            TMDB
+          </a>
+        </div>
+      </td>
+    </tr>
   );
 };
 
