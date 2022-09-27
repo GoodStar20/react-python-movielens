@@ -6,4 +6,5 @@ setup(
     name="challenge",
     version=version,
     description="challenge",
+    py_modules=[],
 )

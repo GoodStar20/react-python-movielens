@@ -1,5 +1,3 @@
-import flask
-import argparse
 import pathlib
 import tempfile
 from zipfile import ZipFile
@@ -21,10 +19,8 @@ MOVIELENS_URLS = 'http://files.grouplens.org/datasets/movielens/ml-latest-small.
 
 def download_movielens(
     mkdir=True,
-    verbose=False,
 ):
-    if verbose is True:
-        print(f"Downloading from {MOVIELENS_URLS}")
+    print(f"Downloading from {MOVIELENS_URLS}")
     output_dir = pathlib.Path('datasets').resolve()
     if not output_dir.exists():
         if mkdir:
@@ -52,8 +48,7 @@ def download_movielens(
                 temp_f.write(chunk)
             with ZipFile(temp_f, "r") as zipf:
                 zipf.extractall(output_dir)
-                if verbose is True:
-                    print(f"\nUnzipped.\n\nFiles downloaded and unziped")
+                print(f"\nUnzipped.\nFiles downloaded and unziped")
                 store_data()
 
 def store_data():
@@ -98,7 +93,7 @@ def store_data():
         id SERIAL PRIMARY KEY
         ,user_id INTEGER
         ,movie_id INTEGER
-        ,rating INTEGER
+        ,rating DECIMAL(2,1)
         ,timestamp INTEGER
         ,FOREIGN KEY(movie_id) REFERENCES movies(movie_id)
     );
@@ -128,17 +123,3 @@ def store_data():
             cur.execute("INSERT INTO links (movie_id, imdb_id, tmdb_id) VALUES (%s, %s, %s)", row)
 
     db.commit()
-
-def setup_args():
-    parser = argparse.ArgumentParser(description="Download movielens")
-    parser.add_argument("--verbose", default=False, action="store_true")
-    parser.add_argument("--mkdir", default=False, action="store_true")
-    return parser.parse_args()
-
-
-if __name__ == "__main__":
-    args = setup_args()
-    verbose = args.verbose
-    mkdir = args.mkdir
-    # download_movielens( mkdir=mkdir, verbose=verbose)
-    store_data()
